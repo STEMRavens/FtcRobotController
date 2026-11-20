@@ -6,6 +6,7 @@ import org.firstinspires.ftc.teamcode.mechanisms.ArcadeDrive;
 
 //This code tells the car how to interperet gamepad input
 
+@TeleOp
 public class OpMode extends com.qualcomm.robotcore.eventloop.opmode.OpMode {
     ArcadeDrive drive = new ArcadeDrive();
     double forward, rotate;
@@ -17,9 +18,22 @@ public class OpMode extends com.qualcomm.robotcore.eventloop.opmode.OpMode {
 
     @Override
     public void loop() {
-        forward = gamepad1.left_stick_y;
+        forward = -gamepad1.left_stick_y;
         rotate = gamepad1.right_stick_x;
 
         drive.drive(forward, rotate);
+
+        if (gamepad1.left_trigger_pressed) {
+            drive.intake();
+        } else {
+            drive.stopIntake();
+        }
+
+        if (gamepad1.right_trigger_pressed) {
+            drive.launch();
+        } else {
+            drive.stopLaunchWheel();
+        }
     }
 }
+
